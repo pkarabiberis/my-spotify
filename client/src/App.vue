@@ -2,7 +2,7 @@
   <v-app>
     <v-container>
       <v-content>
-        <Profile :token="params" v-if="params.access_token" />
+        <Profile v-if="token" />
         <Login v-else />
       </v-content>
     </v-container>
@@ -12,6 +12,9 @@
 <script>
 import Login from './components/Login';
 import Profile from './components/Profile';
+import { token } from './Spotify';
+import Spotify from 'spotify-web-api-js';
+const spotifyWebApi = new Spotify();
 
 export default {
   name: 'App',
@@ -22,24 +25,11 @@ export default {
   },
 
   data: () => ({
-    params: '',
+    token: '',
   }),
   mounted() {
-    this.params = this.getHashParams();
-    console.log(`ACCESS TOKEN:`, this.params.access_token);
-    console.log('REFRESH TOKEN:', this.params.refresh_token);
-  },
-  methods: {
-    getHashParams() {
-      const hashParams = {};
-      let e;
-      const r = /([^&;=]+)=?([^&;]*)/g;
-      const q = window.location.hash.substring(1);
-      while ((e = r.exec(q))) {
-        hashParams[e[1]] = decodeURIComponent(e[2]);
-      }
-      return hashParams;
-    },
+    this.token = token;
+    if (this.token) spotifyWebApi.setAccessToken(this.token);
   },
 };
 </script>

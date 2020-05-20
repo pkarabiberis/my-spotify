@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '../components/Login';
-import Profile from '../components/Profile';
+import Artist from '../components/Artist';
+import User from '../components/User';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: Login,
+    name: 'user',
+    component: User,
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
+    path: '/artist/:id',
+    name: 'artist',
+    component: Artist,
   },
 ];
 
